@@ -1,5 +1,6 @@
 import Vue from "vue";
 import { createRenderer } from "vue-server-renderer";
+import { readFileSync } from 'fs';
 import express from "express";
 
 const data = {
@@ -19,7 +20,8 @@ const data = {
   ],
 };
 
-const renderer = createRenderer();
+const template = readFileSync('public/index.template.html', 'utf-8');
+const renderer = createRenderer({ template: template });
 const server = new express();
 
 server.get("/data", async (_req, res) => {
@@ -31,7 +33,7 @@ server.get('*', async (_req, res) => {
     data: {
       url: _req.url,
     },
-    template: `<div>The visited url is {{url}}</div>`,
+    template: `<div>The visited URL is: {{ url }}</div>`
   });
 
   renderer.renderToString(app, (err, html) => {
@@ -39,13 +41,7 @@ server.get('*', async (_req, res) => {
       res.status(500).end("Internal Server Error");
       return;
     }
-    res.end(`
-            <!DOCTYPE html>
-            <html lang="en">
-              <head><title>Hello</title></head>
-              <body>${html}</body>
-            </html>
-          `);
+    res.end(html);
   });
 });
 
