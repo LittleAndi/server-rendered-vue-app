@@ -1,3 +1,4 @@
+import {} from 'vue';
 import express from 'express';
 
 const data = {
@@ -13,16 +14,16 @@ const data = {
     }]
 }
 
-const app = new express();
+const server = new express();
 
-app.get('/', async (_req, res) => {
+server.get('/', async (_req, res) => {
     res.send('Hello world!');
 });
 
-app.get('/data', async (_req, res) => {
+server.get('/data', async (_req, res) => {
     res.json(data);
 })
 
-app.listen(7778);
+server.listen(7778);
 
 console.info('Server is listening.');
