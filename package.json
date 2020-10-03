@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/LittleAndi/server-rendered-vue-app#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "vue": "^2.6.12",
     "vue-server-renderer": "^2.6.12"
   }
